@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:uni_project/pages/home_page.dart';
 import 'firebase_options.dart';
 import 'pages/UserAuthentication/login_page.dart';
+import 'pages/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +14,8 @@ void main() async {
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
-      '/': (context) => const AuthPage(),
+      '/': (context) => const SplashScreen(),
+      '/auth': (context) => const AuthPage(),
       '/login': (context) => const login_page(),
       '/home': (context) => const HomePage(),
     },
