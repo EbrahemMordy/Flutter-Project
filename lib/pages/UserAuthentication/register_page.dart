@@ -4,16 +4,20 @@ import 'package:uni_project/pages/UserAuthentication/components/my_button.dart';
 import 'package:uni_project/pages/UserAuthentication/components/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class login_page extends StatefulWidget {
-  final Function? regButonPressed;
-  const login_page({super.key, this.regButonPressed});
+class RegisterPage extends StatefulWidget {
+  final Function? loginButonPressed;
+  const RegisterPage({super.key, this.loginButonPressed});
 
   @override
-  State<login_page> createState() => _login_pageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _login_pageState extends State<login_page> {
-  void signUserIn() async {
+class _RegisterPageState extends State<RegisterPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  void signUserUp() async {
     // Show a loading dialog
     showDialog(
       context: context,
@@ -24,12 +28,21 @@ class _login_pageState extends State<login_page> {
       },
     );
 
+    // create a new user
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      Navigator.pop(context);
+      // before creating a new user, check if the password is the same
+      if (passwordController.text != confirmPasswordController.text) {
+        Navigator.pop(context); // close the loading dialog
+        showErrorMessage("Passwords do not match");
+        return;
+      } else {
+        // create a new user
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        Navigator.pop(context);
+      }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       // if email is badly formatted
@@ -77,8 +90,6 @@ class _login_pageState extends State<login_page> {
     );
   }
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,13 +107,13 @@ class _login_pageState extends State<login_page> {
                   radius: 50,
                   backgroundImage: AssetImage('assets/avatar.jpg'),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 25),
 
                 // TODO: welcome message
                 const Text(
-                  'Welcome Student!, Please login to continue.',
+                  'Welcome Student!, Please Register to continue.',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 22, 20, 20),
                   ),
@@ -123,30 +134,19 @@ class _login_pageState extends State<login_page> {
                   hintText: 'Password',
                   obscureText: true,
                 ),
-
-                // TODO: forgot password button
-                const SizedBox(height: 15),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forgot password?',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromARGB(255, 23, 98, 173),
-                        ),
-                      ),
-                    ],
-                  ),
+                // Confirm password
+                const SizedBox(height: 20),
+                MyTextField(
+                  controller: confirmPasswordController,
+                  hintText: 'Confirm Password',
+                  obscureText: true,
                 ),
 
                 // TODO: login button
                 const SizedBox(height: 15),
                 MyButton(
-                  text: 'Login',
-                  onTap: signUserIn,
+                  onTap: signUserUp,
+                  text: 'Register',
                 ),
 
                 // TODO: Continue with Google and X buttons
@@ -193,26 +193,26 @@ class _login_pageState extends State<login_page> {
                   ],
                 ),
 
-                // TODO: register button
+                // TODO: Login button
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Don\'t have an account?',
+                      'Already have an account?',
                       style: TextStyle(
                         color: Color.fromARGB(255, 43, 42, 42),
                       ),
                     ),
                     TextButton(
                       onPressed: () {
-                        print("Register button pressed");
-                        widget.regButonPressed!();
+                        print("Login button pressed");
+                        widget.loginButonPressed!();
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 7),
                         child: Text(
-                          'Register',
+                          'Login',
                           style: TextStyle(
                             color: Colors.blue[700],
                             fontWeight: FontWeight.bold,
