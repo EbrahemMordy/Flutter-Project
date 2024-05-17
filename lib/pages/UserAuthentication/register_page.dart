@@ -3,6 +3,7 @@ import 'package:uni_project/pages/UserAuthentication/components/my_text_field.da
 import 'package:uni_project/pages/UserAuthentication/components/my_button.dart';
 import 'package:uni_project/pages/UserAuthentication/components/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function? loginButonPressed;
@@ -42,6 +43,16 @@ class _RegisterPageState extends State<RegisterPage> {
           password: passwordController.text,
         );
         Navigator.pop(context);
+
+        // using Firestore to store user data
+        CollectionReference users =
+            FirebaseFirestore.instance.collection('users');
+        users.doc(emailController.text).set({
+          'email': emailController.text,
+          'password': passwordController.text,
+          "level": -1, // -1 means the user has not started any Roadmap
+          // TODO: topics, and each topic has some materials, each material has a link and progress
+        });
       }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
