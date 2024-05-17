@@ -3,7 +3,8 @@ import 'package:uni_project/pages/UserAuthentication/components/my_text_field.da
 import 'package:uni_project/pages/UserAuthentication/components/my_button.dart';
 import 'package:uni_project/pages/UserAuthentication/components/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:uni_project/database.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function? loginButonPressed;
@@ -20,6 +21,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void signUserUp() async {
     // Show a loading dialog
+
+    print("Register button pressed");
+
     showDialog(
       context: context,
       builder: (context) {
@@ -38,33 +42,31 @@ class _RegisterPageState extends State<RegisterPage> {
         return;
       } else {
         // create a new user
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
         Navigator.pop(context);
 
-        // using Firestore to store user data
-        CollectionReference users =
-            FirebaseFirestore.instance.collection('users');
-        users.doc(emailController.text).set({
-          'email': emailController.text,
-          'password': passwordController.text,
-          "level": -1, // -1 means the user has not started any Roadmap
-          // TODO: topics, and each topic has some materials, each material has a link and progress
-        });
+        // Insert the new user's information into the SQLite database
+        if (database != null) {
+          await database!.insert(
+            'users',
+            {'firebase_uid': userCredential.user?.uid, 'current_level': -1},
+            conflictAlgorithm: ConflictAlgorithm.replace,
+          );
+        } else {
+          print("Database is null");
+        }
       }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      // if email is badly formatted
-      print("---------------------------------------------------");
-      print("Error: ${e.code}, ${e.message}, ${e.toString()}");
-      print("---------------------------------------------------");
       showErrorMessage("${e.code}: ${e.message}");
     }
   }
 
-// generic error dialog
+  // generic error dialog
   void showErrorMessage(String message) {
     showDialog(
       context: context,
