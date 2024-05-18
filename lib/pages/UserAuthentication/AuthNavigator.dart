@@ -22,12 +22,12 @@ class _AuthNavigatorState extends State<AuthNavigator> {
   @override
   Widget build(BuildContext context) {
     if (isLoginPage) {
-      return login_page(
-        regButonPressed: togglePage,
+      return LoginPage(
+        regButtonPressed: togglePage,
       );
     } else {
       return RegisterPage(
-        loginButonPressed: togglePage,
+        loginButtonPressed: togglePage,
       );
     }
   }

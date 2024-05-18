@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:uni_project/database.dart';
+import 'package:uni_project/pages/db/database.dart';
 import 'package:uni_project/pages/Level/level_0_dashboard.dart';
 import 'package:uni_project/pages/Level/level_1_dashboard.dart';
 
@@ -16,7 +16,8 @@ class _LevelSelectionState extends State<LevelSelection> {
   Future<int> getUserLevel(String firebaseUid) async {
     print('Getting user level');
     print('FirebaseUid: $firebaseUid');
-    final Database db = database!;
+
+    final Database db = await DatabaseProvider().database;
     final List<Map<String, dynamic>> maps = await db.query(
       'users',
       where: 'firebase_uid = ?',
@@ -81,7 +82,7 @@ class LevelSelectionWidget extends StatelessWidget {
 
   // Function to set the user's level to 0 or 1 in the database
   void setUserLevel(int level) async {
-    final Database db = database!;
+    final Database db = await DatabaseProvider().database;
     await db.update(
       'users',
       {'current_level': level},

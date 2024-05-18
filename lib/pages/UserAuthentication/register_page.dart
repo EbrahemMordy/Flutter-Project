@@ -4,11 +4,11 @@ import 'package:uni_project/pages/UserAuthentication/components/my_button.dart';
 import 'package:uni_project/pages/UserAuthentication/components/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:uni_project/database.dart';
+import 'package:uni_project/pages/db/database.dart';
 
 class RegisterPage extends StatefulWidget {
-  final Function? loginButonPressed;
-  const RegisterPage({super.key, this.loginButonPressed});
+  final Function? loginButtonPressed;
+  const RegisterPage({super.key, this.loginButtonPressed});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -20,10 +20,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmPasswordController = TextEditingController();
 
   void signUserUp() async {
-    // Show a loading dialog
-
-    print("Register button pressed");
-
+    final Database database = await DatabaseProvider().database;
+    
     showDialog(
       context: context,
       builder: (context) {
@@ -33,32 +31,23 @@ class _RegisterPageState extends State<RegisterPage> {
       },
     );
 
-    // create a new user
     try {
-      // before creating a new user, check if the password is the same
       if (passwordController.text != confirmPasswordController.text) {
-        Navigator.pop(context); // close the loading dialog
+        Navigator.pop(context);
         showErrorMessage("Passwords do not match");
         return;
       } else {
-        // create a new user
-        UserCredential userCredential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
         Navigator.pop(context);
 
-        // Insert the new user's information into the SQLite database
-        if (database != null) {
-          await database!.insert(
-            'users',
-            {'firebase_uid': userCredential.user?.uid, 'current_level': -1},
-            conflictAlgorithm: ConflictAlgorithm.replace,
-          );
-        } else {
-          print("Database is null");
-        }
+        await database.insert(
+          'users',
+          {'firebase_uid': userCredential.user?.uid, 'current_level': -1},
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
       }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
@@ -66,7 +55,6 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  // generic error dialog
   void showErrorMessage(String message) {
     showDialog(
       context: context,
@@ -114,15 +102,11 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 30),
-
-                // TODO: Add a logo here
                 const CircleAvatar(
                   radius: 50,
                   backgroundImage: AssetImage('assets/avatar.jpg'),
                 ),
                 const SizedBox(height: 25),
-
-                // TODO: welcome message
                 const Text(
                   'Welcome Student!, Please Register to continue.',
                   style: TextStyle(
@@ -131,38 +115,29 @@ class _RegisterPageState extends State<RegisterPage> {
                     color: Color.fromARGB(255, 22, 20, 20),
                   ),
                 ),
-
-                // TODO: username input
                 const SizedBox(height: 30),
                 MyTextField(
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
                 ),
-
-                // TODO: password input
                 const SizedBox(height: 20),
                 MyTextField(
                   controller: passwordController,
                   hintText: 'Password',
                   obscureText: true,
                 ),
-                // Confirm password
                 const SizedBox(height: 20),
                 MyTextField(
                   controller: confirmPasswordController,
                   hintText: 'Confirm Password',
                   obscureText: true,
                 ),
-
-                // TODO: login button
                 const SizedBox(height: 15),
                 MyButton(
                   onTap: signUserUp,
                   text: 'Register',
                 ),
-
-                // TODO: Continue with Google and X buttons
                 const SizedBox(height: 30),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -178,8 +153,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
                           'Or continue with',
-                          style:
-                              TextStyle(color: Color.fromARGB(255, 46, 46, 46)),
+                          style: TextStyle(color: Color.fromARGB(255, 46, 46, 46)),
                         ),
                       ),
                       Expanded(
@@ -191,22 +165,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 30),
-                // Buttons
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // google button
                     SquareTile(imagePath: 'assets/Google__G__logo.svg.png'),
                     SizedBox(width: 50),
-                    // x button
-                    SquareTile(
-                        imagePath: 'assets/1690643640twitter-x-icon-png.webp')
+                    SquareTile(imagePath: 'assets/1690643640twitter-x-icon-png.webp')
                   ],
                 ),
-
-                // TODO: Login button
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -219,8 +186,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     TextButton(
                       onPressed: () {
-                        print("Login button pressed");
-                        widget.loginButonPressed!();
+                        if (widget.loginButtonPressed != null) {
+                          widget.loginButtonPressed!();
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 7),

@@ -4,15 +4,15 @@ import 'package:uni_project/pages/UserAuthentication/components/my_button.dart';
 import 'package:uni_project/pages/UserAuthentication/components/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class login_page extends StatefulWidget {
-  final Function? regButonPressed;
-  const login_page({super.key, this.regButonPressed});
+class LoginPage extends StatefulWidget {
+  final Function? regButtonPressed;
+  const LoginPage({super.key, this.regButtonPressed});
 
   @override
-  State<login_page> createState() => _login_pageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _login_pageState extends State<login_page> {
+class _LoginPageState extends State<LoginPage> {
   void signUserIn() async {
     // Show a loading dialog
     showDialog(
@@ -32,15 +32,10 @@ class _login_pageState extends State<login_page> {
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      // if email is badly formatted
-      print("---------------------------------------------------");
-      print("Error: ${e.code}, ${e.message}, ${e.toString()}");
-      print("---------------------------------------------------");
       showErrorMessage("${e.code}: ${e.message}");
     }
   }
 
-// generic error dialog
   void showErrorMessage(String message) {
     showDialog(
       context: context,
@@ -79,6 +74,7 @@ class _login_pageState extends State<login_page> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,15 +86,11 @@ class _login_pageState extends State<login_page> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 30),
-
-                // TODO: Add a logo here
                 const CircleAvatar(
                   radius: 50,
                   backgroundImage: AssetImage('assets/avatar.jpg'),
                 ),
                 const SizedBox(height: 30),
-
-                // TODO: welcome message
                 const Text(
                   'Welcome Student!, Please login to continue.',
                   style: TextStyle(
@@ -107,24 +99,18 @@ class _login_pageState extends State<login_page> {
                     color: Color.fromARGB(255, 22, 20, 20),
                   ),
                 ),
-
-                // TODO: username input
                 const SizedBox(height: 30),
                 MyTextField(
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
                 ),
-
-                // TODO: password input
                 const SizedBox(height: 20),
                 MyTextField(
                   controller: passwordController,
                   hintText: 'Password',
                   obscureText: true,
                 ),
-
-                // TODO: forgot password button
                 const SizedBox(height: 15),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25),
@@ -141,15 +127,11 @@ class _login_pageState extends State<login_page> {
                     ],
                   ),
                 ),
-
-                // TODO: login button
                 const SizedBox(height: 15),
                 MyButton(
                   text: 'Login',
                   onTap: signUserIn,
                 ),
-
-                // TODO: Continue with Google and X buttons
                 const SizedBox(height: 30),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -165,8 +147,7 @@ class _login_pageState extends State<login_page> {
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
                           'Or continue with',
-                          style:
-                              TextStyle(color: Color.fromARGB(255, 46, 46, 46)),
+                          style: TextStyle(color: Color.fromARGB(255, 46, 46, 46)),
                         ),
                       ),
                       Expanded(
@@ -178,22 +159,15 @@ class _login_pageState extends State<login_page> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 30),
-                // Buttons
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // google button
                     SquareTile(imagePath: 'assets/Google__G__logo.svg.png'),
                     SizedBox(width: 50),
-                    // x button
-                    SquareTile(
-                        imagePath: 'assets/1690643640twitter-x-icon-png.webp')
+                    SquareTile(imagePath: 'assets/1690643640twitter-x-icon-png.webp')
                   ],
                 ),
-
-                // TODO: register button
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -206,8 +180,9 @@ class _login_pageState extends State<login_page> {
                     ),
                     TextButton(
                       onPressed: () {
-                        print("Register button pressed");
-                        widget.regButonPressed!();
+                        if (widget.regButtonPressed != null) {
+                          widget.regButtonPressed!();
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 7),
