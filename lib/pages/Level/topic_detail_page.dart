@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_project/pages/db/database.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TopicDetailPage extends StatefulWidget {
   final String topic;
@@ -32,18 +33,12 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
   Future<void> _toggleMaterialCompletion(int materialId, bool isCompleted) async {
     try {
       final String currentUserId = auth.currentUser!.uid;
-      print('Toggling material completion for material $materialId');
       final Map<String, dynamic> user =
           await DatabaseProvider().getUserByFirebaseUid(currentUserId);
-      final int userId = user['user_id']; // Ensure this matches your database schema
+      final int userId = user['user_id'];
 
-      print('User ID: $userId');
-      print("Current User ID: $currentUserId");
-
-      // Update material progress
       await DatabaseProvider().updateMaterialProgress(userId, materialId, isCompleted);
 
-      // Recalculate overall progress and topic progress
       await updateProgress();
 
       setState(() {
@@ -51,12 +46,10 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
       });
     } catch (e) {
       print('Error toggling material completion: $e');
-      // Handle the error, e.g., show a Snackbar or Dialog
     }
   }
 
   Future<void> updateProgress() async {
-    // Recalculate and update the progress in the parent widget or globally
     setState(() {});
   }
 
@@ -132,24 +125,32 @@ class MaterialTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final isCompleted = material['material_progress'] == 100;
 
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(material['material_link']),
-      trailing: Checkbox(
-        value: isCompleted,
-        onChanged: (bool? value) {
-          if (value != null) {
-            onToggleCompletion(material['material_id'], value);
-          }
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      child: ListTile(
+        leading: Icon(icon, color: Colors.blue),
+        title: Text(material['material_name']),
+        trailing: Checkbox(
+          value: isCompleted,
+          onChanged: (bool? value) {
+            if (value != null) {
+              onToggleCompletion(material['material_id'], value);
+            }
+          },
+        ),
+        onTap: () {
+          openLink(material['material_link']);
         },
       ),
-      onTap: () {
-        openLink(material['material_link']);
-      },
     );
   }
 
-  void openLink(material) {
-    print('Opening link: $material');
+  void openLink(String url) async {
+    final Uri uri = Uri.parse(url);
+    try {
+      await launchUrl(uri);
+    } catch (e) {
+      throw 'Could not launch $url';
+    }
   }
 }
