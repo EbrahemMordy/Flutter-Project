@@ -2,25 +2,22 @@
 
 ## TODO/In Progress
 
-- Dashboard
-  - Progress value (Level/Topic) needs to be updated every time the user open the dashboard page
 - Topic page
-  - Add a list of resources for each topic
+  - Add a list of resources to DB for each topic
 - Auth/Verification module
   - Reset password
-  - Sign up with google
 - App Launcher icon
 
 ## Implemented
 
-- [x] Initial Dashboard
+- [x] Dashboard for each level
 - [x] Initial Topic resources page
 - [x] Level Selection
 - [x] Database
 - [x] Scrolling Container
 - [x] Splash Screen
 - [x] Login & Register Pages
-- [x] Firebase Auth (Email/Password only for now)
+- [x] Firebase Auth (Email/Password)
 
 ## Screenshots
 
