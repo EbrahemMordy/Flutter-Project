@@ -3,13 +3,12 @@
 ## TODO/In Progress
 
 - Dashboard
-    - Progress value (Level/Topic) needs to be updated every time the user open the dashboard page
+  - Progress value (Level/Topic) needs to be updated every time the user open the dashboard page
 - Topic page
-    - Change the layout of the topic page
-    - Implement when the user click on the link it will take them to the resource  
+  - Add a list of resources for each topic
 - Auth/Verification module
-    - Reset password
-    - Sign up with google
+  - Reset password
+  - Sign up with google
 - App Launcher icon
 
 ## Implemented
@@ -23,7 +22,6 @@
 - [x] Login & Register Pages
 - [x] Firebase Auth (Email/Password only for now)
 
-
 ## Screenshots
 
 ### Level Dashboard (In-progress)
@@ -34,8 +32,7 @@
 
 </div>
 
-
-### Level Selection 
+### Level Selection
 
 <div align="center">
 
@@ -47,7 +44,7 @@
 
 <div align="center">
 
-![image](https://github.com/EbrahemMordy/Flutter-Project/assets/73834838/c6c9e398-fa77-4f2d-9f3f-0e918f9358aa)
+![image](https://github.com/EbrahemMordy/Flutter-Project/assets/73834838/6cb838cd-f837-4fcd-b456-aa383062a17d)
 
 </div>
 
