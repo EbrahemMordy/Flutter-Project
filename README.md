@@ -4,8 +4,6 @@
 
 - Dashboard
     - Progress value (Level/Topic) needs to be updated every time the user open the dashboard page
-- Level Selection
-    - logout button doesn't work properly
 - Topic page
     - Change the layout of the topic page
     - Implement when the user click on the link it will take them to the resource  
