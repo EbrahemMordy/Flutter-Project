@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  
   void signUserIn() async {
     // Show a loading dialog
     showDialog(
@@ -181,6 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(
                       onPressed: () {
                         if (widget.regButtonPressed != null) {
+                          print("button clicked");
                           widget.regButtonPressed!();
                         }
                       },

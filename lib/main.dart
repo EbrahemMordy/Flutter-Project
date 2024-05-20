@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:uni_project/pages/UserAuthentication/login_page.dart';
 import 'firebase_options.dart';
 import 'pages/splash_screen.dart';
 import 'package:uni_project/pages/db/database.dart';
@@ -24,6 +25,7 @@ void main() async {
     initialRoute: '/',
     routes: {
       '/': (context) => const SplashScreen(),
+      '/login':(context) => const LoginPage(),
     },
   ));
 }

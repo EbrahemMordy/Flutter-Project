@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:uni_project/pages/UserAuthentication/auth_page.dart';
 import 'package:uni_project/pages/db/database.dart';
 import 'package:uni_project/pages/Level/level_0_dashboard.dart';
 import 'package:uni_project/pages/Level/level_1_dashboard.dart';
@@ -101,8 +102,12 @@ class LevelSelectionWidget extends StatelessWidget {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
-              // Navigate to the login page after signing out
-              Navigator.pushReplacementNamed(context, '/login');
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AuthPage(),
+                ),
+              );
             },
           ),
         ],
