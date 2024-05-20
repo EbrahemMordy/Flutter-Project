@@ -39,8 +39,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
 
       await DatabaseProvider().updateMaterialProgress(userId, materialId, isCompleted);
 
-      await updateProgress();
-
+      // Refresh the materials list
       setState(() {
         _materialsFuture = fetchMaterials(widget.topicId);
       });
@@ -49,15 +48,15 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
     }
   }
 
-  Future<void> updateProgress() async {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.topic),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 15, 131, 226)),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _materialsFuture,

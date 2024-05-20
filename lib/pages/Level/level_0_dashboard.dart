@@ -56,7 +56,7 @@ class _Level0DashboardState extends State<Level0Dashboard> {
     final List<Map<String, dynamic>> topics = await db.query(
       'topics',
       where: 'level_id = ?',
-      whereArgs: [0], // level 1 for Newcomers
+      whereArgs: [0],
     );
 
     Map<String, Map<String, dynamic>> topicProgressMap = {};
@@ -69,29 +69,16 @@ class _Level0DashboardState extends State<Level0Dashboard> {
     return topicProgressMap;
   }
 
-  Future<int?> getTopicIdByName(String topicName) async {
-    final Database db = await DatabaseProvider().database;
-    final List<Map<String, dynamic>> topicResult = await db.query(
-      'topics',
-      where: 'topic_name = ?',
-      whereArgs: [topicName],
-    );
-    if (topicResult.isNotEmpty) {
-      return topicResult.first['topic_id'] as int;
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Newcomers Dashboard'),
+        // Switch to the level selection page
         actions: [
           IconButton(
             icon: const Icon(Icons.change_circle),
             onPressed: () {
-              // Navigate to the level selection page
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const LevelSelectionWidget()),
@@ -124,6 +111,8 @@ class _Level0DashboardState extends State<Level0Dashboard> {
                     style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                   const SizedBox(height: 20),
+
+                  // Overall progress
                   Center(
                     child: Stack(
                       alignment: Alignment.center,
@@ -146,7 +135,10 @@ class _Level0DashboardState extends State<Level0Dashboard> {
                       ],
                     ),
                   ),
+
                   const SizedBox(height: 20),
+
+                  // Topic progress
                   Expanded(
                     child: FutureBuilder<Map<String, Map<String, dynamic>>>(
                       future: fetchTopicProgress(),
@@ -191,12 +183,13 @@ class _Level0DashboardState extends State<Level0Dashboard> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => TopicDetailPage(
-                                            topic: topic,
-                                            topicId: topicId,
-                                          ),
-                                        ),
-                                      );
+                                            builder: (context) => TopicDetailPage(
+                                                topic: topic, topicId: topicId)),
+                                      ).then((_) {
+                                        setState(() {
+                                          // Call setState to refresh the page.
+                                        });
+                                      });
                                     }
                                   },
                                 ),

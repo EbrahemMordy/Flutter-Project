@@ -35,7 +35,7 @@ class _Level1DashboardState extends State<Level1Dashboard> {
 
     int userId = userResult.first['user_id'] as int;
 
-    return await DatabaseProvider().getLevelProgress(1, userId); // Explicitly use Level 1
+    return await DatabaseProvider().getLevelProgress(1, userId);
   }
 
   Future<Map<String, Map<String, dynamic>>> fetchTopicProgress() async {
@@ -67,19 +67,6 @@ class _Level1DashboardState extends State<Level1Dashboard> {
       topicProgressMap[topicName] = {'topicId': topicId, 'progress': progress};
     }
     return topicProgressMap;
-  }
-
-  Future<int?> getTopicIdByName(String topicName) async {
-    final Database db = await DatabaseProvider().database;
-    final List<Map<String, dynamic>> topicResult = await db.query(
-      'topics',
-      where: 'topic_name = ?',
-      whereArgs: [topicName],
-    );
-    if (topicResult.isNotEmpty) {
-      return topicResult.first['topic_id'] as int;
-    }
-    return null;
   }
 
   @override
@@ -191,12 +178,13 @@ class _Level1DashboardState extends State<Level1Dashboard> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => TopicDetailPage(
-                                            topic: topic,
-                                            topicId: topicId,
-                                          ),
-                                        ),
-                                      );
+                                            builder: (context) => TopicDetailPage(
+                                                topic: topic, topicId: topicId)),
+                                      ).then((_) {
+                                        setState(() {
+                                          // Call setState to refresh the page.
+                                        });
+                                      });
                                     }
                                   },
                                 ),
