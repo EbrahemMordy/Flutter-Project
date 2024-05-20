@@ -33,8 +33,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
     try {
       if (passwordController.text != confirmPasswordController.text) {
-        Navigator.pop(context);
-        showErrorMessage("Passwords do not match");
+        if (mounted) {
+          Navigator.pop(context);
+          showErrorMessage("Passwords do not match");
+        }
         return;
       } else {
         UserCredential userCredential =
@@ -42,7 +44,9 @@ class _RegisterPageState extends State<RegisterPage> {
           email: emailController.text,
           password: passwordController.text,
         );
-        Navigator.pop(context);
+        if (mounted) {
+          Navigator.pop(context);
+        }
 
         await database.insert(
           'users',
@@ -54,8 +58,15 @@ class _RegisterPageState extends State<RegisterPage> {
         await DatabaseProvider().initializeMaterialsProgress(userCredential.user!.uid);
       }
     } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
-      showErrorMessage("${e.code}: ${e.message}");
+      if (mounted) {
+        Navigator.pop(context);
+        showErrorMessage("${e.code}: ${e.message}");
+      }
+    } catch (e) {
+      if (mounted) {
+        Navigator.pop(context);
+        showErrorMessage("An unexpected error occurred: $e");
+      }
     }
   }
 
