@@ -188,8 +188,7 @@ class DatabaseProvider {
       }
     }
 
-    final List<Map<String, dynamic>> materialResults =
-        await db.query('materials');
+    final List<Map<String, dynamic>> materialResults = await db.query('materials');
     for (var material in materialResults) {
       print('Inserted material: $material');
     }
@@ -207,21 +206,20 @@ class DatabaseProvider {
   Future<double> getLevelProgress(int levelId, int userId) async {
     final db = await database;
 
-    final totalTopicsResult = await db.rawQuery(
-      'SELECT COUNT(*) as total FROM topics WHERE level_id = ?',
-      [levelId],
-    );
+    List<Map<String, dynamic>> topics =
+        await db.query('topics', where: 'level_id = ?', whereArgs: [levelId]);
 
-    final completedTopicsResult = await db.rawQuery(
-      'SELECT COUNT(DISTINCT topic_id) as total FROM progress WHERE user_id = ? AND progress = 100 AND topic_id IN (SELECT topic_id FROM topics WHERE level_id = ?)',
-      [userId, levelId],
-    );
+    int topicsDone = 0;
+    int topicsNum = topics.length;
 
-    int totalTopics = totalTopicsResult.first['total'] as int;
-    int completedTopics = completedTopicsResult.first['total'] as int;
+    for (var topic in topics) {
+      double topicProgress = await getTopicProgress(topic['topic_id'], userId);
 
-    if (totalTopics == 0) return 0.0;
-    return (completedTopics / totalTopics) * 100;
+      if (topicProgress == 100) topicsDone++;
+    }
+
+    if (topicsNum == 0) return 0.0;
+    return (topicsDone / topicsNum) * 100;
   }
 
   Future<double> getTopicProgress(int topicId, int userId) async {
@@ -299,20 +297,23 @@ class DatabaseProvider {
   Future<void> updateMaterialProgress(
       int userId, int materialId, bool isCompleted) async {
     final db = await database;
-    final List<Map<String, dynamic>> materialProgress =
+
+    List<Map<String, dynamic>> materialProgress =
         await getMaterialProgress(userId, materialId);
+    final topicIdResult = await db.query(
+      'materials',
+      columns: ['topic_id'],
+      where: 'material_id = ?',
+      whereArgs: [materialId],
+    );
+    print('Material Progress before update: $materialProgress');
+
+    final topicId = topicIdResult.first['topic_id'] as int;
 
     if (isCompleted) {
       if (materialProgress.isEmpty) {
         // Insert if it doesn't exist
-        final topicIdResult = await db.query(
-          'materials',
-          columns: ['topic_id'],
-          where: 'material_id = ?',
-          whereArgs: [materialId],
-        );
         if (topicIdResult.isNotEmpty) {
-          final topicId = topicIdResult.first['topic_id'] as int;
           await db.insert(
             'progress',
             {
@@ -343,22 +344,38 @@ class DatabaseProvider {
       }
     }
 
-    final topicIdResult = await db.query(
-      'materials',
-      columns: ['topic_id'],
-      where: 'material_id = ?',
-      whereArgs: [materialId],
-    );
+    materialProgress = await getMaterialProgress(userId, materialId);
 
-    if (topicIdResult.isNotEmpty) {
-      final topicId = topicIdResult.first['topic_id'] as int;
-      await db.rawUpdate('''
-        UPDATE progress
-        SET progress = (
-          SELECT AVG(progress) FROM progress WHERE topic_id = ? AND user_id = ?
-        )
-        WHERE topic_id = ? AND user_id = ?
-      ''', [topicId, userId, topicId, userId]);
+    print('Material Progress after update: $materialProgress');
+  }
+
+  Future<void> initializeMaterialsProgress(String firebaseUid) async {
+    final db = await database;
+    final userResult = await db.query(
+      'users',
+      where: 'firebase_uid = ?',
+      whereArgs: [firebaseUid],
+    );
+    if (userResult.isEmpty) {
+      throw Exception('User not found');
+    }
+    final userId = userResult.first['user_id'] as int;
+
+    final materials = await db.query('materials');
+
+    // Initialize progress for all materials
+    // This will help us to calculate the overall progress for each topic and each level
+    for (var material in materials) {
+      await db.insert(
+        'progress',
+        {
+          'user_id': userId,
+          'topic_id': material['topic_id'],
+          'material_id': material['material_id'],
+          'progress': 0,
+        },
+        conflictAlgorithm: ConflictAlgorithm.ignore,
+      );
     }
   }
 }

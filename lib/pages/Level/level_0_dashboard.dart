@@ -3,7 +3,7 @@ import 'package:uni_project/pages/Level/level_selection_page.dart';
 import 'package:uni_project/pages/db/database.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uni_project/pages/topic_detail_page.dart';
+import 'package:uni_project/pages/Level/topic_detail_page.dart';
 
 class Level0Dashboard extends StatefulWidget {
   const Level0Dashboard({super.key});
@@ -63,8 +63,7 @@ class _Level0DashboardState extends State<Level0Dashboard> {
     for (var topic in topics) {
       String topicName = topic['topic_name'] as String;
       int topicId = topic['topic_id'] as int;
-      double progress =
-          await DatabaseProvider().getTopicProgress(topicId, userId);
+      double progress = await DatabaseProvider().getTopicProgress(topicId, userId);
       topicProgressMap[topicName] = {'topicId': topicId, 'progress': progress};
     }
     return topicProgressMap;
@@ -95,8 +94,7 @@ class _Level0DashboardState extends State<Level0Dashboard> {
               // Navigate to the level selection page
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const LevelSelectionWidget()),
+                MaterialPageRoute(builder: (context) => const LevelSelectionWidget()),
               );
             },
           ),
@@ -142,8 +140,8 @@ class _Level0DashboardState extends State<Level0Dashboard> {
                         ),
                         Text(
                           '${overallProgress.toInt()}%',
-                          style: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                          style:
+                              const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -153,13 +151,10 @@ class _Level0DashboardState extends State<Level0Dashboard> {
                     child: FutureBuilder<Map<String, Map<String, dynamic>>>(
                       future: fetchTopicProgress(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator());
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
-                          return Center(
-                              child: Text('Error: ${snapshot.error}'));
+                          return Center(child: Text('Error: ${snapshot.error}'));
                         } else {
                           Map<String, Map<String, dynamic>> topicProgressMap =
                               snapshot.data ?? {};
@@ -167,10 +162,8 @@ class _Level0DashboardState extends State<Level0Dashboard> {
                           return ListView.builder(
                             itemCount: topicProgressMap.length,
                             itemBuilder: (context, index) {
-                              String topic =
-                                  topicProgressMap.keys.elementAt(index);
-                              double topicProgress =
-                                  topicProgressMap[topic]?['progress'];
+                              String topic = topicProgressMap.keys.elementAt(index);
+                              double topicProgress = topicProgressMap[topic]?['progress'];
 
                               return Card(
                                 margin: const EdgeInsets.symmetric(vertical: 8),
@@ -192,8 +185,7 @@ class _Level0DashboardState extends State<Level0Dashboard> {
                                     ),
                                   ),
                                   onTap: () async {
-                                    int? topicId =
-                                        topicProgressMap[topic]?['topicId'];
+                                    int? topicId = topicProgressMap[topic]?['topicId'];
                                     if (topicId != null) {
                                       // Navigate to the topic detail page
                                       Navigator.push(

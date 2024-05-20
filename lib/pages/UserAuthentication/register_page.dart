@@ -21,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void signUserUp() async {
     final Database database = await DatabaseProvider().database;
-    
+
     showDialog(
       context: context,
       builder: (context) {
@@ -37,7 +37,8 @@ class _RegisterPageState extends State<RegisterPage> {
         showErrorMessage("Passwords do not match");
         return;
       } else {
-        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
@@ -48,6 +49,11 @@ class _RegisterPageState extends State<RegisterPage> {
           {'firebase_uid': userCredential.user?.uid, 'current_level': -1},
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
+
+        // Add all materials to the progress table for this specific user
+        await DatabaseProvider()
+            .initializeMaterialsProgress(userCredential.user!.uid);
+
       }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
@@ -153,7 +159,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
                           'Or continue with',
-                          style: TextStyle(color: Color.fromARGB(255, 46, 46, 46)),
+                          style:
+                              TextStyle(color: Color.fromARGB(255, 46, 46, 46)),
                         ),
                       ),
                       Expanded(
@@ -171,7 +178,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     SquareTile(imagePath: 'assets/Google__G__logo.svg.png'),
                     SizedBox(width: 50),
-                    SquareTile(imagePath: 'assets/1690643640twitter-x-icon-png.webp')
+                    SquareTile(
+                        imagePath: 'assets/1690643640twitter-x-icon-png.webp')
                   ],
                 ),
                 const SizedBox(height: 20),

@@ -6,8 +6,7 @@ class TopicDetailPage extends StatefulWidget {
   final String topic;
   final int topicId;
 
-  const TopicDetailPage(
-      {required this.topic, required this.topicId, super.key});
+  const TopicDetailPage({required this.topic, required this.topicId, super.key});
 
   @override
   State<TopicDetailPage> createState() {
@@ -30,21 +29,19 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
         .getMaterialsWithProgress(topicId, auth.currentUser!.uid);
   }
 
-  Future<void> _toggleMaterialCompletion(
-      int materialId, bool isCompleted) async {
+  Future<void> _toggleMaterialCompletion(int materialId, bool isCompleted) async {
     try {
       final String currentUserId = auth.currentUser!.uid;
       print('Toggling material completion for material $materialId');
       final Map<String, dynamic> user =
           await DatabaseProvider().getUserByFirebaseUid(currentUserId);
-      final int userId =
-          user['user_id']; // Ensure this matches your database schema
+      final int userId = user['user_id']; // Ensure this matches your database schema
 
       print('User ID: $userId');
+      print("Current User ID: $currentUserId");
 
       // Update material progress
-      await DatabaseProvider()
-          .updateMaterialProgress(userId, materialId, isCompleted);
+      await DatabaseProvider().updateMaterialProgress(userId, materialId, isCompleted);
 
       // Recalculate overall progress and topic progress
       await updateProgress();
@@ -122,8 +119,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
 class MaterialTile extends StatelessWidget {
   final Map<String, dynamic> material;
   final IconData icon;
-  final Future<void> Function(int materialId, bool isCompleted)
-      onToggleCompletion;
+  final Future<void> Function(int materialId, bool isCompleted) onToggleCompletion;
 
   const MaterialTile({
     required this.material,
