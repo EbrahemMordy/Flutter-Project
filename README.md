@@ -3,7 +3,6 @@
 ## TODO/In Progress
 
 - Dashboard
-    - Progress tracking for each level needs to be implemented correctly
     - Progress value (Level/Topic) needs to be updated every time the user open the dashboard page
 - Level Selection
     - logout button doesn't work properly
@@ -13,6 +12,7 @@
 - Auth/Verification module
     - Reset password
     - Sign up with google
+- App Launcher icon
 
 ## Implemented
 
@@ -21,7 +21,6 @@
 - [x] Level Selection
 - [x] Database
 - [x] Scrolling Container
-- [x] App Logo
 - [x] Splash Screen
 - [x] Login & Register Pages
 - [x] Firebase Auth (Email/Password only for now)
