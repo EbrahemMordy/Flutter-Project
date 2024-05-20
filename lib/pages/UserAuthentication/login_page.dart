@@ -3,6 +3,7 @@ import 'package:uni_project/pages/UserAuthentication/components/my_text_field.da
 import 'package:uni_project/pages/UserAuthentication/components/my_button.dart';
 import 'package:uni_project/pages/UserAuthentication/components/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uni_project/pages/UserAuthentication/forgot_pw_page.dart';
 
 class LoginPage extends StatefulWidget {
   final Function? regButtonPressed;
@@ -13,7 +14,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  
   void signUserIn() async {
     // Show a loading dialog
     showDialog(
@@ -113,18 +113,26 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                 ),
                 const SizedBox(height: 15),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        'Forgot password?',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromARGB(255, 23, 98, 173),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ForgotPasswordPage()));
+                        },
+                        child: const Text(
+                          'Forgot password?',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 23, 98, 173),
+                          ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
