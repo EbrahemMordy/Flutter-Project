@@ -13,6 +13,8 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    bool isDarkMode = theme.brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         widget.onTap();
@@ -21,7 +23,9 @@ class _MyButtonState extends State<MyButton> {
         padding: const EdgeInsets.all(15),
         margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 6, 35, 44),
+          color: isDarkMode
+              ? const Color.fromARGB(255, 6, 145, 170)
+              : const Color.fromARGB(255, 4, 98, 114),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(

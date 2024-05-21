@@ -78,8 +78,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    bool isDarkMode = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 159, 215, 241),
+      backgroundColor: isDarkMode
+          ? const Color.fromARGB(255, 26, 25, 25)
+          : const Color.fromARGB(255, 159, 215, 241),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -92,12 +97,14 @@ class _LoginPageState extends State<LoginPage> {
                   backgroundImage: AssetImage('assets/avatar.jpg'),
                 ),
                 const SizedBox(height: 30),
-                const Text(
+                Text(
                   'Welcome Student!, Please login to continue.',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 22, 20, 20),
+                    color: isDarkMode
+                        ? const Color.fromARGB(255, 255, 255, 255)
+                        : const Color.fromARGB(255, 22, 20, 20),
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -125,44 +132,49 @@ class _LoginPageState extends State<LoginPage> {
                               MaterialPageRoute(
                                   builder: (context) => const ForgotPasswordPage()));
                         },
-                        child: const Text(
+                        child: Text(
                           'Forgot password?',
                           style: TextStyle(
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 23, 98, 173),
-                          ),
+                              fontSize: 15,
+                              color: isDarkMode
+                                  ? const Color.fromARGB(255, 88, 152, 216)
+                                  : const Color.fromARGB(255, 43, 42, 42)),
                         ),
                       )
                     ],
                   ),
                 ),
                 const SizedBox(height: 15),
-                MyButton(
-                  text: 'Login',
-                  onTap: signUserIn,
-                ),
+                MyButton(text: 'Login', onTap: signUserIn),
                 const SizedBox(height: 30),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     children: [
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: isDarkMode
+                              ? const Color.fromARGB(255, 255, 255, 255)
+                              : const Color.fromARGB(255, 46, 46, 46),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
                           'Or continue with',
-                          style: TextStyle(color: Color.fromARGB(255, 46, 46, 46)),
+                          style: TextStyle(
+                              color: isDarkMode
+                                  ? const Color.fromARGB(255, 255, 255, 255)
+                                  : const Color.fromARGB(255, 46, 46, 46)),
                         ),
                       ),
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: isDarkMode
+                              ? const Color.fromARGB(255, 255, 255, 255)
+                              : const Color.fromARGB(255, 46, 46, 46),
                         ),
                       ),
                     ],
@@ -181,10 +193,12 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Don\'t have an account?',
                       style: TextStyle(
-                        color: Color.fromARGB(255, 43, 42, 42),
+                        color: isDarkMode
+                            ? const Color.fromARGB(255, 255, 255, 255)
+                            : const Color.fromARGB(255, 43, 42, 42),
                       ),
                     ),
                     TextButton(
@@ -195,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 7),
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
                         child: Text(
                           'Register',
                           style: TextStyle(

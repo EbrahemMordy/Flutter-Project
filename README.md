@@ -2,12 +2,6 @@
 
 ## TODO/In Progress
 
-- Topic page
-  - Add a list of resources to DB for each topic
-- Auth/Verification module
-  - Reset password
-- App Launcher icon
-
 ## Implemented
 
 - [x] Dashboard for each level
@@ -16,8 +10,10 @@
 - [x] Database
 - [x] Scrolling Container
 - [x] Splash Screen
-- [x] Login & Register Pages
+- [x] Login & Register Pages & Reset password
 - [x] Firebase Auth (Email/Password)
+- [x] App Launcher icon
+- [x] Dark mode
 
 ## Screenshots
 
@@ -25,7 +21,7 @@
 
 <div align="center">
 
-![image](https://github.com/EbrahemMordy/Flutter-Project/assets/73834838/c723446b-95e9-4f6a-b13b-c12eb43a4843)
+![image](https://github.com/EbrahemMordy/Flutter-Project/assets/73834838/cc60ee2b-7cd0-4b9e-9ef0-683985599b7d)
 
 </div>
 
@@ -33,7 +29,7 @@
 
 <div align="center">
 
-![image](https://github.com/EbrahemMordy/Flutter-Project/assets/73834838/50026efa-afc6-4a8f-a010-0453aef65be5)
+![image](https://github.com/EbrahemMordy/Flutter-Project/assets/73834838/8b1aeec2-7821-48a1-83e0-907f3ed3b88a)
 
 </div>
 
@@ -52,6 +48,8 @@
 ![image](https://github.com/EbrahemMordy/Flutter-Project/assets/73834838/29beaa9a-3939-4696-af58-e6caecff2ad4)
 
 ![image](https://github.com/EbrahemMordy/Flutter-Project/assets/73834838/15aba482-273e-4977-970c-80319bfc95b4)
+
+![image](https://github.com/EbrahemMordy/Flutter-Project/assets/73834838/b0a3201a-a662-4cca-8440-71a87028b164)
 
 </div>
 

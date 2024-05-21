@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uni_project/pages/UserAuthentication/login_page.dart';
 import 'firebase_options.dart';
 import 'pages/splash_screen.dart';
 import 'package:uni_project/pages/db/database.dart';
+import 'theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,13 +23,32 @@ void main() async {
   testMaterialsTable();
   testProgressTable();
 
-  runApp(MaterialApp(
-    initialRoute: '/',
-    routes: {
-      '/': (context) => const SplashScreen(),
-      '/login':(context) => const LoginPage(),
-    },
-  ));
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    return MaterialApp(
+      themeMode: themeProvider.themeMode,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/login': (context) => const LoginPage(),
+      },
+    );
+  }
 }
 
 void testProgressTable() async {

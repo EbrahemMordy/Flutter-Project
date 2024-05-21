@@ -75,15 +75,24 @@ class _Level1DashboardState extends State<Level1Dashboard> {
       appBar: AppBar(
         title: const Text('Level 1 Dashboard'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.change_circle),
-            onPressed: () {
+          InkWell(
+            onTap: () {
               // Navigate to the level selection page
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const LevelSelectionWidget()),
               );
             },
+            child: const Padding(
+              padding: EdgeInsets.only(right: 24.0),
+              child: Row(
+                children: [
+                  Icon(Icons.settings),
+                  SizedBox(width: 5),
+                  Text('Settings'),
+                ],
+              ),
+            ),
           ),
         ],
       ),

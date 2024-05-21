@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uni_project/pages/UserAuthentication/components/my_text_field.dart';
 import 'package:uni_project/pages/UserAuthentication/components/my_button.dart';
 import 'package:uni_project/pages/UserAuthentication/components/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uni_project/pages/db/database.dart';
+import 'package:uni_project/theme_provider.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function? loginButtonPressed;
@@ -108,8 +110,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 159, 215, 241),
+      backgroundColor: isDarkMode
+          ? const Color.fromARGB(255, 26, 25, 25)
+          : const Color.fromARGB(255, 159, 215, 241),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -122,12 +128,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   backgroundImage: AssetImage('assets/avatar.jpg'),
                 ),
                 const SizedBox(height: 25),
-                const Text(
+                Text(
                   'Welcome Student!, Please Register to continue.',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 22, 20, 20),
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -149,32 +155,36 @@ class _RegisterPageState extends State<RegisterPage> {
                   obscureText: true,
                 ),
                 const SizedBox(height: 15),
-                MyButton(
-                  onTap: signUserUp,
-                  text: 'Register',
-                ),
+                MyButton(onTap: signUserUp, text: 'Register'),
                 const SizedBox(height: 30),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     children: [
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: isDarkMode
+                              ? const Color.fromARGB(255, 255, 255, 255)
+                              : const Color.fromARGB(255, 46, 46, 46),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
                           'Or continue with',
-                          style: TextStyle(color: Color.fromARGB(255, 46, 46, 46)),
+                          style: TextStyle(
+                              color: isDarkMode
+                                  ? const Color.fromARGB(255, 255, 255, 255)
+                                  : const Color.fromARGB(255, 46, 46, 46)),
                         ),
                       ),
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: isDarkMode
+                              ? const Color.fromARGB(255, 255, 255, 255)
+                              : const Color.fromARGB(255, 46, 46, 46),
                         ),
                       ),
                     ],
@@ -193,10 +203,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Already have an account?',
                       style: TextStyle(
-                        color: Color.fromARGB(255, 43, 42, 42),
+                        color: isDarkMode
+                            ? const Color.fromARGB(255, 255, 255, 255)
+                            : const Color.fromARGB(255, 43, 42, 42),
                       ),
                     ),
                     TextButton(

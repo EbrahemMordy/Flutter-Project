@@ -1,41 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class MyTextField extends StatefulWidget {
-  final controller;
-  final hintText;
-  final obscureText;
+class MyTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final String hintText;
+  final bool obscureText;
 
   const MyTextField({
     super.key,
-    this.controller,
-    this.hintText,
+    required this.controller,
+    required this.hintText,
     this.obscureText = false,
   });
 
   @override
-  State<MyTextField> createState() => TextFieldState();
-}
-
-class TextFieldState extends State<MyTextField> {
-  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    bool isDarkMode = theme.brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: TextField(
-        controller: widget.controller,
-        obscureText: widget.obscureText,
+        controller: controller,
+        obscureText: obscureText,
         decoration: InputDecoration(
-          hintText: widget.hintText,
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+          hintText: hintText,
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: isDarkMode ? Colors.white : const Color.fromARGB(255, 6, 145, 170),
+            ),
           ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Color.fromARGB(255, 6, 145, 170)),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: isDarkMode ? Colors.white : const Color.fromARGB(255, 6, 145, 170),
+            ),
           ),
-          // fillColor: Colors.grey[100],
-          fillColor: const Color.fromARGB(255, 192, 223, 235),
+          fillColor: isDarkMode ? Colors.grey[800] : Colors.grey[200],
           filled: true,
+        ),
+        style: TextStyle(
+          color: isDarkMode ? Colors.white : Colors.black,
         ),
       ),
     );

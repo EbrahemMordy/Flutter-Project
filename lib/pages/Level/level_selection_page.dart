@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uni_project/pages/UserAuthentication/auth_page.dart';
 import 'package:uni_project/pages/db/database.dart';
 import 'package:uni_project/pages/Level/level_0_dashboard.dart';
 import 'package:uni_project/pages/Level/level_1_dashboard.dart';
+import 'package:uni_project/theme_provider.dart';
 
 class LevelSelection extends StatefulWidget {
   const LevelSelection({super.key});
@@ -77,9 +79,7 @@ class _LevelSelectionState extends State<LevelSelection> {
 }
 
 class LevelSelectionWidget extends StatelessWidget {
-  const LevelSelectionWidget({
-    super.key,
-  });
+  const LevelSelectionWidget({super.key});
 
   // Function to set the user's level to 0 or 1 in the database
   void setUserLevel(int level) async {
@@ -94,6 +94,9 @@ class LevelSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Level'),
@@ -108,6 +111,13 @@ class LevelSelectionWidget extends StatelessWidget {
                   builder: (context) => const AuthPage(),
                 ),
               );
+            },
+          ),
+          IconButton(
+            icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
+            onPressed: () {
+              ThemeMode newThemeMode = isDarkMode ? ThemeMode.light : ThemeMode.dark;
+              themeProvider.setThemeMode(newThemeMode);
             },
           ),
         ],
