@@ -129,46 +129,534 @@ class DatabaseProvider {
       print('Inserted topic: $topic');
     }
 
-    final List<Map<String, dynamic>> materials = [
+    final List<Map<String, dynamic>> levelZeroMaterials = [
       {
         'topic_name': 'Data Types & Conditions',
         'material_name': 'Resource 1',
         'material_type': 'resource',
-        'material_link': 'https://example.com/resource1'
+        'material_link': 'https://google.com'
       },
       {
         'topic_name': 'Data Types & Conditions',
         'material_name': 'Resource 2',
         'material_type': 'resource',
-        'material_link': 'https://example.com/resource2'
+        'material_link': 'https://google.com'
       },
       {
         'topic_name': 'Data Types & Conditions',
         'material_name': 'Resource 3',
         'material_type': 'resource',
-        'material_link': 'https://example.com/resource3'
+        'material_link': 'https://google.com'
       },
       {
         'topic_name': 'Data Types & Conditions',
         'material_name': 'Problem 1',
         'material_type': 'problem',
-        'material_link': 'https://example.com/problem1'
+        'material_link': 'https://google.com'
       },
       {
         'topic_name': 'Data Types & Conditions',
         'material_name': 'Problem 2',
         'material_type': 'problem',
-        'material_link': 'https://example.com/problem2'
+        'material_link': 'https://google.com'
       },
-      // Add more materials for other topics as needed
+      {
+        'topic_name': 'Data Types & Conditions',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // Second Topic: Loops
+      {
+        'topic_name': 'Loops',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Loops',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Loops',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Loops',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Loops',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Loops',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // 3: Array
+      {
+        'topic_name': 'Array',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Array',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Array',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Array',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Array',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Array',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // 4: Functions
+      {
+        'topic_name': 'Functions',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Functions',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Functions',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Functions',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Functions',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Functions',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // String
+      {
+        'topic_name': 'String',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'String',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'String',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'String',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'String',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'String',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // Frequency array
+      {
+        'topic_name': 'Frequency array',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Frequency array',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Frequency array',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Frequency array',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Frequency array',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Frequency array',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // Basic Math
+      {
+        'topic_name': 'Basic Math',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Basic Math',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Basic Math',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Basic Math',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Basic Math',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Basic Math',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
     ];
 
-    for (var material in materials) {
+    for (var material in levelZeroMaterials) {
       final topicResult = await db.query(
         'topics',
         columns: ['topic_id'],
         where: 'topic_name = ? AND level_id = ?',
         whereArgs: [material['topic_name'], levelMap['Level 1']],
+      );
+      if (topicResult.isNotEmpty) {
+        final topicId = topicResult.first['topic_id'] as int;
+        await db.insert(
+          'materials',
+          {
+            'topic_id': topicId,
+            'material_name': material['material_name'],
+            'material_type': material['material_type'],
+            'material_link': material['material_link'],
+          },
+          conflictAlgorithm: ConflictAlgorithm.ignore,
+        );
+        print('Inserted material for topic_id $topicId: $material');
+      } else {
+        print('Topic not found for material: $material');
+      }
+    }
+
+    final List<Map<String, dynamic>> levelOneMaterials = [
+      // 1: Cumulative sum
+      {
+        'topic_name': 'Cumulative sum',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Cumulative sum',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Cumulative sum',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Cumulative sum',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Cumulative sum',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Cumulative sum',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // STL
+      {
+        'topic_name': 'STL',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'STL',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'STL',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'STL',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'STL',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'STL',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // Binary Search
+      {
+        'topic_name': 'Binary Search',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Binary Search',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Binary Search',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Binary Search',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Binary Search',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Binary Search',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // Two pointers
+      {
+        'topic_name': 'Two pointers',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Two pointers',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Two pointers',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Two pointers',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Two pointers',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Two pointers',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // Bitmasks
+      {
+        'topic_name': 'Bitmasks',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Bitmasks',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Bitmasks',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Bitmasks',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Bitmasks',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Bitmasks',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+
+      // Number Theory
+      {
+        'topic_name': 'Number Theory',
+        'material_name': 'Resource 1',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Number Theory',
+        'material_name': 'Resource 2',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Number Theory',
+        'material_name': 'Resource 3',
+        'material_type': 'resource',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Number Theory',
+        'material_name': 'Problem 1',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Number Theory',
+        'material_name': 'Problem 2',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+      {
+        'topic_name': 'Number Theory',
+        'material_name': 'Problem 3',
+        'material_type': 'problem',
+        'material_link': 'https://google.com'
+      },
+    ];
+
+    for (var material in levelOneMaterials) {
+      final topicResult = await db.query(
+        'topics',
+        columns: ['topic_id'],
+        where: 'topic_name = ? AND level_id = ?',
+        whereArgs: [material['topic_name'], levelMap['Level 2']],
       );
       if (topicResult.isNotEmpty) {
         final topicId = topicResult.first['topic_id'] as int;
